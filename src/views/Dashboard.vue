@@ -43,7 +43,9 @@ const fetchDashboardData = async () => {
     }
 
     if (r2Res.status === 'fulfilled') {
-      r2Buckets.value = (r2Res.value as any).result || []
+      const resultData = (r2Res.value as any).result
+      // R2 API usually wraps array inside result.buckets
+      r2Buckets.value = resultData?.buckets ? resultData.buckets : (Array.isArray(resultData) ? resultData : [])
     } else {
       console.warn('Failed to fetch R2', r2Res.reason)
     }

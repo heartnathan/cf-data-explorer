@@ -1,7 +1,17 @@
 {
-  "name": "temp-app",
+  "name": "cf-data-explorer",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "A modern, pure-frontend Cloudflare data management dashboard for D1, R2, and KV.",
+  "author": "CF Data Explorer Contributors",
+  "keywords": [
+    "cloudflare",
+    "d1",
+    "r2",
+    "kv",
+    "dashboard",
+    "admin"
+  ],
   "type": "module",
   "scripts": {
     "dev": "vite",
