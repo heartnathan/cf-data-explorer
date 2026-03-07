@@ -1,7 +1,7 @@
 // Cloudflare Pages Function as a reverse proxy for Cloudflare API
 // This avoids CORS errors when calling Cloudflare API directly from the browser
 
-export const onRequest: PagesFunction = async (context) => {
+export const onRequest = async (context: any) => {
   const { request, params } = context;
   const url = new URL(request.url);
 
@@ -19,6 +19,34 @@ export const onRequest: PagesFunction = async (context) => {
   // 复制出新的请求对象
   const newRequest = new Request(targetUrl.toString(), new Request(request));
 
-  // 透传发往 Cloudflare 核心 API，并返回结果
-  return fetch(newRequest);
+  // 处理 OPTIONS 预检请求 (Preflight)
+  if (request.method === "OPTIONS") {
+    return new Response(null, {
+      status: 204,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods":
+          "GET, POST, PUT, DELETE, OPTIONS, PATCH",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Max-Age": "86400",
+      },
+    });
+  }
+
+  // 透传发往 Cloudflare 核心 API
+  const response = await fetch(newRequest);
+
+  // 组装带 CORS 的新响应
+  const newResponse = new Response(response.body, response);
+  newResponse.headers.set("Access-Control-Allow-Origin", "*");
+  newResponse.headers.set(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, OPTIONS, PATCH",
+  );
+  newResponse.headers.set(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization",
+  );
+
+  return newResponse;
 };
