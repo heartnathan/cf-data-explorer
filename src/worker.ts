@@ -23,10 +23,16 @@ export default {
         `https://api.cloudflare.com${url.pathname}${url.search}`,
       );
 
-      const newHeaders = new Headers(request.headers);
-      newHeaders.delete("Host");
-      newHeaders.delete("Origin");
-      newHeaders.delete("Referer");
+      const newHeaders = new Headers();
+      // Only copy safe headers, explicitly copy Authorization
+      const authHeader = request.headers.get("Authorization");
+      if (authHeader) {
+        newHeaders.set("Authorization", authHeader);
+      }
+      const contentType = request.headers.get("Content-Type");
+      if (contentType) {
+        newHeaders.set("Content-Type", contentType);
+      }
 
       const newRequest = new Request(targetUrl.toString(), {
         method: request.method,
