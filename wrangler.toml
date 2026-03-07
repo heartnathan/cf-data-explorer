@@ -1,0 +1,5 @@
+name = "cf-data-explorer"
+compatibility_date = "2024-03-01"
+# For Cloudflare Pages, wrangler.toml is optional but recommended.
+# Define the build output directory so `wrangler pages deploy` knows what to upload.
+pages_build_output_dir = "dist"
