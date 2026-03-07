@@ -8,18 +8,28 @@
 
 ## 核心功能
 
+<img src="./public/assets/overview.png" width="800" alt="Dashboard Overview">
+
 - **📦 R2 对象存储管理**
   - 支持真正的子目录结构浏览。
   - 完美处理超大目录下的自动长尾分页游览，告别加载卡顿。
   - 支持极速的文件上传与批量删除。
+
+  <img src="./public/assets/r2-browser.png" width="800" alt="R2 Browser">
+
 - **📊 D1 数据库管理**
   - 可见即所得的库表结构解析与实时浏览。
   - 支持基于表格模式的增删改查（提供类似底层 SQL 级别的单行精细化全量 `Copy` 能力以辅助快速录入数据）。
   - 内置基于 `LIMIT/OFFSET` 的表格动态分页检索。
   - 内置 SQL 编辑控制台，支持随意执行自由 `Query`。
   - 一键将表内检索结果导出为 `.csv` 文件。
+
+  <img src="./public/assets/d1-table.png" width="800" alt="D1 Table Browser">
+
 - **🔑 KV 键值对管理**
   - 支持直观全量的键值对读写与增删。
+
+  <img src="./public/assets/kv-namespace.png" width="800" alt="KV Namespace">
 
 ---
 

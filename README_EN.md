@@ -8,18 +8,28 @@ A modern, pure-frontend Cloudflare data management dashboard that allows you to 
 
 ## Core Features
 
+<img src="./public/assets/overview.png" width="800" alt="Dashboard Overview">
+
 - **📦 R2 Object Storage Management**
   - Supports true sub-directory structure browsing.
   - Perfectly handles automatic long-tail pagination for massive directories, eliminating loading lag.
   - Supports lightning-fast file uploads and batch deletions.
+
+  <img src="./public/assets/r2-browser.png" width="800" alt="R2 Browser">
+
 - **📊 D1 Database Management**
   - WYSIWYG database schema parsing and real-time browsing.
   - Supports table-based CRUD operations (provides single-row, fine-grained `Copy` capabilities similar to native SQL to assist with fast data entry).
   - Built-in dynamic table pagination retrieval based on `LIMIT/OFFSET`.
   - Built-in SQL editing console, allowing you to execute raw `Query` at will.
   - One-click export of retrieved table results as `.csv` files.
+
+  <img src="./public/assets/d1-table.png" width="800" alt="D1 Table Browser">
+
 - **🔑 KV Key-Value Management**
   - Supports intuitive full-scale read/write and CRUD operations for key-value pairs.
+
+  <img src="./public/assets/kv-namespace.png" width="800" alt="KV Namespace">
 
 ---
 
