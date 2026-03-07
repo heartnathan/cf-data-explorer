@@ -22,9 +22,17 @@ export default {
       const targetUrl = new URL(
         `https://api.cloudflare.com${url.pathname}${url.search}`,
       );
+
+      const newHeaders = new Headers(request.headers);
+      newHeaders.delete("Host");
+      newHeaders.delete("Origin");
+      newHeaders.delete("Referer");
+
       const newRequest = new Request(
         targetUrl.toString(),
-        new Request(request),
+        new Request(request, {
+          headers: newHeaders,
+        }),
       );
       const response = await fetch(newRequest);
 
