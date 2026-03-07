@@ -1,7 +1,7 @@
 name = "cf-data-explorer"
+main = "src/worker.ts"
 compatibility_date = "2024-03-01"
-# For Cloudflare Pages, wrangler CLI requires explicit [assets] block for static directories
-pages_build_output_dir = "dist"
 
 [assets]
 directory = "./dist"
+binding = "ASSETS"
