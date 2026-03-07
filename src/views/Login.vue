@@ -11,12 +11,13 @@ const authStore = useAuthStore()
 const loading = ref(false)
 const form = reactive({
   accountId: authStore.accountId || '',
-  token: authStore.token || ''
+  email: authStore.email || '',
+  apiKey: authStore.apiKey || ''
 })
 
 const handleLogin = async () => {
-  if (!form.accountId || !form.token) {
-    ElMessage.warning('Please enter both Account ID and API Token')
+  if (!form.accountId || !form.email || !form.apiKey) {
+    ElMessage.warning('Please enter Account ID, Email, and Global API Key')
     return
   }
 
@@ -25,12 +26,13 @@ const handleLogin = async () => {
     // 探测接口验证有效性：尝试拉取 KV 命名空间列表作为探针
     await request.get(`/accounts/${form.accountId}/storage/kv/namespaces`, {
       headers: {
-        Authorization: `Bearer ${form.token}`
+        'X-Auth-Email': form.email,
+        'X-Auth-Key': form.apiKey
       }
     })
 
     // 验证成功
-    authStore.setCredentials(form.accountId, form.token)
+    authStore.setCredentials(form.accountId, form.email, form.apiKey)
     ElMessage.success('Authentication successful')
     router.push('/dashboard')
   } catch (err: any) {
@@ -68,16 +70,21 @@ const handleLogin = async () => {
           </div>
 
           <div>
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Cloudflare Email</label>
+            <el-input v-model="form.email" placeholder="name@example.com" size="large" clearable
+              :prefix-icon="'Message'" />
+          </div>
+
+          <div>
             <div class="flex items-center justify-between mb-1.5">
-              <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">API Token</label>
+              <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Global API Key</label>
               <a href="https://dash.cloudflare.com/profile/api-tokens" target="_blank"
-                class="text-xs text-orange-500 hover:text-orange-600 font-medium">Get Token &rarr;</a>
+                class="text-xs text-orange-500 hover:text-orange-600 font-medium">Get Key &rarr;</a>
             </div>
-            <el-input v-model="form.token" type="password"
-              placeholder="Enter your Cloudflare Global or Scoped API Token" size="large" show-password clearable
-              :prefix-icon="'Key'" @keyup.enter="handleLogin" />
+            <el-input v-model="form.apiKey" type="password" placeholder="Enter your Cloudflare Global API Key"
+              size="large" show-password clearable :prefix-icon="'Key'" @keyup.enter="handleLogin" />
             <p class="text-xs text-slate-400 mt-2 leading-relaxed">
-              Required permissions: Workers KV Storage (Edit), D1 (Edit), Workers R2 Storage (Edit)
+              Required: Account ID, Email, and Global API Key to manage Cloudflare resources
             </p>
           </div>
 

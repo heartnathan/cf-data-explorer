@@ -24,10 +24,14 @@ export default {
       );
 
       const newHeaders = new Headers();
-      // Only copy safe headers, explicitly copy Authorization
-      const authHeader = request.headers.get("Authorization");
-      if (authHeader) {
-        newHeaders.set("Authorization", authHeader);
+      // Only copy safe headers, explicitly copy X-Auth
+      const xAuthEmail = request.headers.get("X-Auth-Email");
+      if (xAuthEmail) {
+        newHeaders.set("X-Auth-Email", xAuthEmail);
+      }
+      const xAuthKey = request.headers.get("X-Auth-Key");
+      if (xAuthKey) {
+        newHeaders.set("X-Auth-Key", xAuthKey);
       }
       const contentType = request.headers.get("Content-Type");
       if (contentType) {

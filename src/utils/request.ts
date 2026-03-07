@@ -11,8 +11,9 @@ const request = axios.create({
 request.interceptors.request.use(
   (config) => {
     const authStore = useAuthStore();
-    if (authStore.token) {
-      config.headers.Authorization = `Bearer ${authStore.token}`;
+    if (authStore.email && authStore.apiKey) {
+      config.headers["X-Auth-Email"] = authStore.email;
+      config.headers["X-Auth-Key"] = authStore.apiKey;
     }
     return config;
   },
