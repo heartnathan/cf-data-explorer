@@ -28,12 +28,13 @@ export default {
       newHeaders.delete("Origin");
       newHeaders.delete("Referer");
 
-      const newRequest = new Request(
-        targetUrl.toString(),
-        new Request(request, {
-          headers: newHeaders,
-        }),
-      );
+      const newRequest = new Request(targetUrl.toString(), {
+        method: request.method,
+        headers: newHeaders,
+        // Only attach body if it's not a GET/HEAD request
+        body: ["GET", "HEAD"].includes(request.method) ? null : request.body,
+        redirect: "manual",
+      });
       const response = await fetch(newRequest);
 
       const newResponse = new Response(response.body, response);
